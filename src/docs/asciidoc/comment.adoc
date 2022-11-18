@@ -1,0 +1,21 @@
+[[resources_comments]]
+= 댓글(Comment)
+
+[[resources_comments_create]]
+== 댓글 생성
+
+`POST` /api/v1/comments
+
+특정 게시 글에 댓글을 등록합니다.
+
+=== Request Body 파라미터
+include::{snippets}/comment-create/request-fields.adoc[]
+
+=== Response
+include::{snippets}/comment-create/response-fields.adoc[]
+
+=== 요청
+include::{snippets}/comment-create/curl-request.adoc[]
+
+=== 응답
+include::{snippets}/comment-create/http-response.adoc[]

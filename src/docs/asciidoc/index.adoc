@@ -8,3 +8,4 @@
 
 include::board.adoc[]
 include::post.adoc[]
+include::comment.adoc[]
