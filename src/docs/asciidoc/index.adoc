@@ -7,3 +7,4 @@
 == Pooplendar - Community
 
 include::board.adoc[]
+include::post.adoc[]

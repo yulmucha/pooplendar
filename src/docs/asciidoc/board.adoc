@@ -1,5 +1,5 @@
 [[resources_boards]]
-= 게시판(Contract)
+= 게시판(Board)
 
 [[resources_boards_create]]
 == 게시판 생성

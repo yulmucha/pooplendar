@@ -1,0 +1,21 @@
+[[resources_posts]]
+= 게시 글(Post)
+
+[[resources_posts_create]]
+== 게시 글 생성
+
+`POST` /api/v1/posts
+
+특정 게시판에 게시 글을 등록합니다.
+
+=== Request Body 파라미터
+include::{snippets}/post-create/request-fields.adoc[]
+
+=== Response
+include::{snippets}/post-create/response-fields.adoc[]
+
+=== 요청
+include::{snippets}/post-create/curl-request.adoc[]
+
+=== 응답
+include::{snippets}/post-create/http-response.adoc[]

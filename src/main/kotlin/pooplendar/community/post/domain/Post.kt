@@ -23,7 +23,7 @@ class Post(
 
     @ElementCollection
     @CollectionTable(name = "post_tag", joinColumns = [JoinColumn(name = "post_id")])
-    val _tags: MutableList<PostTag> = mutableListOf(),
+    private val _tags: MutableList<PostTag> = mutableListOf(),
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
@@ -42,6 +42,6 @@ class Post(
     var likeCount: Long = likeCount
         private set
 
-    val tag: List<PostTag>
+    val tags: List<PostTag>
         get() = _tags
 }
