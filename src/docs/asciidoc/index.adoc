@@ -1,0 +1,9 @@
+:doctype: book
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 1
+:sectlinks:
+
+== Pooplendar - Community
+
+include::board.adoc[]
