@@ -1,6 +1,7 @@
 package pooplendar.community.post.application
 
 import pooplendar.community.post.domain.Post
+import java.time.LocalDateTime
 import javax.validation.constraints.NotBlank
 import javax.validation.constraints.NotNull
 
@@ -23,6 +24,8 @@ data class PostResponse(
     val likeCount: Long,
     val tagIds: Set<Long>,
     val boardId: Long,
+    val createdAt: LocalDateTime,
+    val modifiedAt: LocalDateTime,
 ) {
     constructor(post: Post) : this(
         id = post.id,
@@ -34,5 +37,7 @@ data class PostResponse(
             .map { it.tagId }
             .toSet(),
         boardId = post.boardId,
+        createdAt = post.createdDateTime,
+        modifiedAt = post.modifiedDateTime,
     )
 }

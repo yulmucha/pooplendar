@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation
 import org.springframework.restdocs.payload.JsonFieldType
 import org.springframework.restdocs.payload.PayloadDocumentation
+import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.test.web.servlet.post
 import pooplendar.community.RestControllerTest
 import pooplendar.community.createCreatePostRequest
@@ -38,32 +39,36 @@ class PostRestControllerTest : RestControllerTest() {
                 MockMvcRestDocumentation.document(
                     "post-create",
                     PayloadDocumentation.requestFields(
-                        PayloadDocumentation.fieldWithPath("boardId").type(JsonFieldType.NUMBER)
+                        fieldWithPath("boardId").type(JsonFieldType.NUMBER)
                             .description("게시판 ID"),
-                        PayloadDocumentation.fieldWithPath("title").type(JsonFieldType.STRING)
+                        fieldWithPath("title").type(JsonFieldType.STRING)
                             .description("게시 글 제목"),
-                        PayloadDocumentation.fieldWithPath("contents").type(JsonFieldType.STRING)
+                        fieldWithPath("contents").type(JsonFieldType.STRING)
                             .description("게시 글 내용"),
                     ),
                     PayloadDocumentation.responseFields(
-                        PayloadDocumentation.fieldWithPath("message").type(JsonFieldType.STRING)
+                        fieldWithPath("message").type(JsonFieldType.STRING)
                             .description(""),
-                        PayloadDocumentation.fieldWithPath("body").type(JsonFieldType.OBJECT)
+                        fieldWithPath("body").type(JsonFieldType.OBJECT)
                             .description(""),
-                        PayloadDocumentation.fieldWithPath("body.id").type(JsonFieldType.NUMBER)
+                        fieldWithPath("body.id").type(JsonFieldType.NUMBER)
                             .description("게시 글 ID"),
-                        PayloadDocumentation.fieldWithPath("body.title").type(JsonFieldType.STRING)
+                        fieldWithPath("body.title").type(JsonFieldType.STRING)
                             .description("게시 글 제목"),
-                        PayloadDocumentation.fieldWithPath("body.contents").type(JsonFieldType.STRING)
+                        fieldWithPath("body.contents").type(JsonFieldType.STRING)
                             .description("게시 글 내용"),
-                        PayloadDocumentation.fieldWithPath("body.viewCount").type(JsonFieldType.NUMBER)
+                        fieldWithPath("body.viewCount").type(JsonFieldType.NUMBER)
                             .description("조회 수"),
-                        PayloadDocumentation.fieldWithPath("body.likeCount").type(JsonFieldType.NUMBER)
+                        fieldWithPath("body.likeCount").type(JsonFieldType.NUMBER)
                             .description("좋아요 수"),
-                        PayloadDocumentation.fieldWithPath("body.tagIds").type(JsonFieldType.ARRAY)
+                        fieldWithPath("body.tagIds").type(JsonFieldType.ARRAY)
                             .description("게시 글에 포함된 태그 ID 배열"),
-                        PayloadDocumentation.fieldWithPath("body.boardId").type(JsonFieldType.NUMBER)
+                        fieldWithPath("body.boardId").type(JsonFieldType.NUMBER)
                             .description("게시판 ID"),
+                        fieldWithPath("body.createdAt").type(JsonFieldType.STRING)
+                            .description("생성된 날짜와 시간 정보입니다. ISO 8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm으로 돌아옵니다."),
+                        fieldWithPath("body.modifiedAt").type(JsonFieldType.STRING)
+                            .description("최종 수정된 날짜와 시간 정보입니다. ISO 8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm으로 돌아옵니다."),
                     )
                 )
             )

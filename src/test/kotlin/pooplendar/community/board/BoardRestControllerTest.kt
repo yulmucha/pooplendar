@@ -48,6 +48,10 @@ class BoardRestControllerTest : RestControllerTest() {
                             .description("게시판 아이디"),
                         fieldWithPath("body.name").type(JsonFieldType.STRING)
                             .description("게시판 이름"),
+                        fieldWithPath("body.createdAt").type(JsonFieldType.STRING)
+                            .description("생성된 날짜와 시간 정보입니다. ISO 8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm으로 돌아옵니다."),
+                        fieldWithPath("body.modifiedAt").type(JsonFieldType.STRING)
+                            .description("최종 수정된 날짜와 시간 정보입니다. ISO 8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm으로 돌아옵니다."),
                     )
                 )
             )

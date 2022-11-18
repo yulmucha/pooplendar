@@ -2,6 +2,7 @@ package pooplendar.community
 
 import pooplendar.community.post.application.CreatePostRequest
 import pooplendar.community.post.application.PostResponse
+import java.time.LocalDateTime
 
 private const val TITLE = "게시 글 제목"
 private const val CONTENTS = "게시 글 내용"
@@ -26,6 +27,8 @@ fun createPostResponse(
     likeCount: Long = LIKE_COUNT,
     tagIds: Set<Long> = setOf(2L, 3L),
     boardId: Long = 1L,
+    createdAt: LocalDateTime = LocalDateTime.now(),
+    modifiedAt: LocalDateTime = LocalDateTime.now(),
 ) = PostResponse(
     id = id,
     title = title,
@@ -34,4 +37,6 @@ fun createPostResponse(
     likeCount = likeCount,
     tagIds = tagIds,
     boardId = boardId,
+    createdAt = createdAt,
+    modifiedAt = modifiedAt,
 )
