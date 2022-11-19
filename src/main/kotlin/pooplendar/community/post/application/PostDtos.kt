@@ -14,6 +14,8 @@ data class CreatePostRequest(
 
     @field:NotBlank
     val contents: String,
+
+    val tags: List<String>,
 )
 
 data class PostResponse(

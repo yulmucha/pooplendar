@@ -45,6 +45,8 @@ class PostRestControllerTest : RestControllerTest() {
                             .description("게시 글 제목"),
                         fieldWithPath("contents").type(JsonFieldType.STRING)
                             .description("게시 글 내용"),
+                        fieldWithPath("tags").type(JsonFieldType.ARRAY)
+                            .description("게시 글 태그 배열"),
                     ),
                     PayloadDocumentation.responseFields(
                         fieldWithPath("message").type(JsonFieldType.STRING)
