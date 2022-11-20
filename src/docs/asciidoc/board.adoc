@@ -1,0 +1,21 @@
+[[resources_boards]]
+= 게시판(Board)
+
+[[resources_boards_create]]
+== 게시판 생성
+
+`POST` /api/v1/boards
+
+게시판을 생성합니다.
+
+=== Request Body 파라미터
+include::{snippets}/board-create/request-fields.adoc[]
+
+=== Response
+include::{snippets}/board-create/response-fields.adoc[]
+
+=== 요청
+include::{snippets}/board-create/curl-request.adoc[]
+
+=== 응답
+include::{snippets}/board-create/http-response.adoc[]
