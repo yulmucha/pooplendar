@@ -1,5 +1,6 @@
 package pooplendar.community.post.application
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import pooplendar.community.post.domain.Post
@@ -26,5 +27,16 @@ class PostService(
 
         return postRepository.save(post)
             .let(::PostResponse)
+    }
+
+    fun findAllByBoardId(boardId: Long, offset: Long, size: Int): List<PostResponse> {
+        return postRepository.findAllByBoardId(boardId, offset, PageRequest.ofSize(size))
+            .map(::PostResponse)
+    }
+
+    fun getById(id: Long): PostResponse {
+        val post = postRepository.findById(id)
+            ?: throw IllegalArgumentException("게시 글을 찾을 수 없습니댜. id: $id")
+        return PostResponse(post)
     }
 }
