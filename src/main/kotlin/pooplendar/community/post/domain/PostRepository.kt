@@ -9,4 +9,6 @@ interface PostRepository : Repository<Post, Long> {
 
     @Query("select p from Post p where p.boardId = :boardId and p.id > :offset")
     fun findAllByBoardId(boardId: Long, offset: Long, pageable: Pageable): List<Post>
+
+    fun findById(id: Long): Post?
 }

@@ -38,3 +38,22 @@ include::{snippets}/post-find-all/curl-request.adoc[]
 
 === 응답
 include::{snippets}/post-find-all/http-response.adoc[]
+
+[[resources_posts_get_by_id]]
+== 게시 글 조회
+
+`GET` /api/v1/posts/{postId}
+
+특정 게시 글을 조회합니다.
+
+=== Path 파라미터
+include::{snippets}/post-get-by-id/path-parameters.adoc[]
+
+=== Response
+include::{snippets}/post-get-by-id/response-fields.adoc[]
+
+=== 요청
+include::{snippets}/post-get-by-id/curl-request.adoc[]
+
+=== 응답
+include::{snippets}/post-get-by-id/http-response.adoc[]

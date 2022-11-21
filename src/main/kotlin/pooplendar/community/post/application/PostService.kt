@@ -33,4 +33,10 @@ class PostService(
         return postRepository.findAllByBoardId(boardId, offset, PageRequest.ofSize(size))
             .map(::PostResponse)
     }
+
+    fun getById(id: Long): PostResponse {
+        val post = postRepository.findById(id)
+            ?: throw IllegalArgumentException("게시 글을 찾을 수 없습니댜. id: $id")
+        return PostResponse(post)
+    }
 }
