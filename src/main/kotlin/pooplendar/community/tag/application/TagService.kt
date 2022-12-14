@@ -12,19 +12,13 @@ class TagService(
 ) {
     @Transactional
     fun saveAll(requests: List<CreateTagRequest>): List<TagResponse> {
-        val tagNames = requests.map { it.name }
-            .map { name ->
-                name.filter { !it.isWhitespace() }
-                    .lowercase()
-            }
-        val tagsByName = tagRepository.findByNameIn(tagNames)
-            .associateBy { it.name }
+        val tagNames = requests.map { it.name.lowercase() }
 
-        val existingTags = tagNames.filter { tagsByName[it] != null }
-            .map { tagsByName.getValue(it) }
-        val newTags = tagNames.filter { tagsByName[it] == null }
-            .map { Tag(it) }
-            .let { tagRepository.saveAll(it) }
+        val existingTags = tagRepository.findByNameIn(tagNames)
+        val existingTagNames = existingTags.map { it.name }
+
+        val newTagNames = tagNames.filter { !existingTagNames.contains(it) }
+        val newTags = tagRepository.saveAll(newTagNames.map { Tag(it) })
 
         return (existingTags + newTags).map(::TagResponse)
     }

@@ -18,6 +18,9 @@ import pooplendar.community.createCreatePostRequest
 import pooplendar.community.createPostResponse
 import pooplendar.community.post.application.PostService
 import pooplendar.community.post.ui.PostRestController
+import pooplendar.community.tag.application.TagResponse
+import pooplendar.community.tag.application.TagService
+import java.time.LocalDateTime
 
 @WebMvcTest(PostRestController::class)
 class PostRestControllerTest : RestControllerTest() {
@@ -25,13 +28,18 @@ class PostRestControllerTest : RestControllerTest() {
     @MockkBean
     lateinit var postService: PostService
 
+    @MockkBean
+    lateinit var tagService: TagService
+
     @Test
     fun `게시판에 게시 글을 등록한다`() {
         val response = createPostResponse(
             viewCount = 0L,
             likeCount = 0L,
         )
-        every { postService.save(any()) } returns response
+
+        every { tagService.saveAll(any()) } returns listOf()
+        every { postService.save(any(), any()) } returns response
 
         mockMvc.post("/api/v1/posts") {
             jsonContent(createCreatePostRequest())
