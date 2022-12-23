@@ -22,4 +22,9 @@ class TagService(
 
         return (existingTags + newTags).map(::TagResponse)
     }
+
+    fun findAllByNameIn(tags: List<String>): List<TagResponse> {
+        return tagRepository.findByNameIn(tags)
+            .map(::TagResponse)
+    }
 }

@@ -37,8 +37,13 @@ class PostRestController(
         validateTags(request.tags)
 
         logger.info("태그 생성 요청 \n\t ${request.tags}")
-        val tagResponses = tagService.saveAll(request.tags.map { CreateTagRequest(it) })
+        val tagResponses = try {
+            tagService.saveAll(request.tags.map { CreateTagRequest(it) })
+        } catch (_: Exception) {
+            tagService.findAllByNameIn(request.tags)
+        }
         logger.info("태그 생성 완료 \n\t $tagResponses")
+
         val postResponse = postService.save(request, tagResponses)
         logger.info("게시 글 생성 완료 \n\t $postResponse")
 
