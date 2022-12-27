@@ -57,3 +57,19 @@ include::{snippets}/post-get-by-id/curl-request.adoc[]
 
 === 응답
 include::{snippets}/post-get-by-id/http-response.adoc[]
+
+[[resources_posts_delete_by_id]]
+== 게시 글 삭제
+
+`DELETE` /api/v1/posts/{postId}
+
+게시 글 하나를 삭제합니다.
+
+=== Path 파라미터
+include::{snippets}/post-delete-by-id/path-parameters.adoc[]
+
+=== 요청
+include::{snippets}/post-delete-by-id/curl-request.adoc[]
+
+=== 응답
+include::{snippets}/post-delete-by-id/http-response.adoc[]

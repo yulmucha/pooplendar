@@ -3,6 +3,7 @@ package pooplendar.community.post.ui
 import org.slf4j.LoggerFactory
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.annotation.Validated
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -79,5 +80,10 @@ class PostRestController(
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ApiResponse<PostResponse> {
         return ApiResponse.success(postService.getById(id))
+    }
+
+    @DeleteMapping("{id}")
+    fun deleteById(@PathVariable id: Long) {
+        postService.deleteById(id)
     }
 }

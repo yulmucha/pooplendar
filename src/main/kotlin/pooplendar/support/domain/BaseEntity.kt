@@ -18,4 +18,7 @@ abstract class BaseEntity(
 
     @LastModifiedDate
     var modifiedDateTime: LocalDateTime = LocalDateTime.now()
-)
+) {
+    var deletedDateTime: LocalDateTime? = null
+        protected set
+}

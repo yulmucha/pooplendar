@@ -1,6 +1,7 @@
 package pooplendar.community.post.domain
 
 import pooplendar.support.domain.BaseEntity
+import java.time.LocalDateTime
 import javax.persistence.CollectionTable
 import javax.persistence.Column
 import javax.persistence.ElementCollection
@@ -47,5 +48,9 @@ class Post(
 
     fun saveTags(tags: List<PostTag>) {
         this._tags.addAll(tags)
+    }
+
+    fun softDelete() {
+        deletedDateTime = LocalDateTime.now()
     }
 }

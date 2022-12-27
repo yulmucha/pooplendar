@@ -1,12 +1,13 @@
 package pooplendar.community.post.application
 
-import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import pooplendar.community.post.domain.Post
 import pooplendar.community.post.domain.PostRepository
 import pooplendar.community.post.domain.PostTag
 import pooplendar.community.tag.application.TagResponse
+import pooplendar.community.post.domain.findAll
+import pooplendar.community.post.domain.getById
 
 @Transactional(readOnly = true)
 @Service
@@ -33,13 +34,18 @@ class PostService(
     }
 
     fun findAllByBoardId(boardId: Long, offset: Long, size: Int): List<PostResponse> {
-        return postRepository.findAllByBoardId(boardId, offset, PageRequest.ofSize(size))
+        return postRepository.findAll(boardId)
             .map(::PostResponse)
     }
 
     fun getById(id: Long): PostResponse {
-        val post = postRepository.findById(id)
-            ?: throw NoSuchElementException("게시 글을 찾을 수 없습니댜. id: $id")
+        val post = postRepository.getById(id)
         return PostResponse(post)
+    }
+
+    @Transactional
+    fun deleteById(id: Long) {
+        postRepository.getById(id)
+            .softDelete()
     }
 }

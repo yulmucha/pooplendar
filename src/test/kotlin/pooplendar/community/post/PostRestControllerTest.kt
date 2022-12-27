@@ -1,7 +1,9 @@
 package pooplendar.community.post
 
 import com.ninjasquad.springmockk.MockkBean
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.restdocs.generate.RestDocumentationGenerator
@@ -11,6 +13,7 @@ import org.springframework.restdocs.payload.PayloadDocumentation
 import org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath
 import org.springframework.restdocs.request.RequestDocumentation
 import org.springframework.restdocs.request.RequestDocumentation.parameterWithName
+import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
 import pooplendar.community.RestControllerTest
@@ -188,6 +191,26 @@ class PostRestControllerTest : RestControllerTest() {
                         fieldWithPath("body.modifiedAt").type(JsonFieldType.STRING)
                             .description("최종 수정된 날짜와 시간 정보입니다. ISO 8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm으로 돌아옵니다."),
                     )
+                )
+            )
+        }
+    }
+
+    @Test
+    fun `게시 글 하나를 삭제한다`() {
+        every { postService.deleteById(any()) } just Runs
+
+        mockMvc.delete("/api/v1/posts/{postId}", 55L) {
+            requestAttr(RestDocumentationGenerator.ATTRIBUTE_NAME_URL_TEMPLATE, "{postId}")
+        }.andExpect {
+            status { isOk() }
+        }.andDo {
+            handle(
+                MockMvcRestDocumentation.document(
+                    "post-delete-by-id",
+                    RequestDocumentation.pathParameters(
+                        parameterWithName("postId").description("")
+                    ),
                 )
             )
         }
