@@ -9,16 +9,17 @@ private const val TITLE = "게시 글 제목"
 private const val CONTENTS = "게시 글 내용"
 private const val VIEW_COUNT = 7979L
 private const val LIKE_COUNT = 79L
-private val TAGS = setOf(
-    Tag(id = 2L, name = "유산균"),
-    Tag(id = 3L, name = "습관")
+private val TAG_NAMES = listOf("Kotlin", "SPRING")
+private val TAGS = listOf(
+    Tag(id = 2L, name = "kotlin"),
+    Tag(id = 3L, name = "spring")
 )
 
 fun createCreatePostRequest(
     boardId: Long = 1L,
     title: String = TITLE,
     contents: String = CONTENTS,
-    tags: List<String> = TAGS.map { it.name },
+    tags: List<String> = TAG_NAMES,
 ) = CreatePostRequest(
     boardId = boardId,
     title = title,
@@ -32,7 +33,7 @@ fun createPostResponse(
     contents: String = CONTENTS,
     viewCount: Long = VIEW_COUNT,
     likeCount: Long = LIKE_COUNT,
-    tagIds: Set<Long> = TAGS.map { it.id }.toSet(),
+    tags: List<String> = TAG_NAMES,
     boardId: Long = 1L,
     createdAt: LocalDateTime = LocalDateTime.now(),
     modifiedAt: LocalDateTime = LocalDateTime.now(),
@@ -42,7 +43,7 @@ fun createPostResponse(
     contents = contents,
     viewCount = viewCount,
     likeCount = likeCount,
-    tagIds = tagIds,
+    tags = tags,
     boardId = boardId,
     createdAt = createdAt,
     modifiedAt = modifiedAt,

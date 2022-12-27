@@ -5,25 +5,28 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import pooplendar.community.post.domain.Post
 import pooplendar.community.post.domain.PostRepository
-import pooplendar.community.tag.application.CreateTagRequest
-import pooplendar.community.tag.application.TagService
+import pooplendar.community.post.domain.PostTag
+import pooplendar.community.tag.application.TagResponse
 
 @Transactional(readOnly = true)
 @Service
 class PostService(
     private val postRepository: PostRepository,
-    private val tagService: TagService,
 ) {
     @Transactional
-    fun save(request: CreatePostRequest): PostResponse {
+    fun save(request: CreatePostRequest, tagResponses: List<TagResponse>): PostResponse {
         val post = Post(
             title = request.title,
             contents = request.contents,
             boardId = request.boardId!!,
         )
-        val tagResponses = request.tags.map { CreateTagRequest(it) }
-            .let { tagService.saveAll(it) }
-        post.saveTags(tagResponses.map { it.id })
+
+        val tagResponsesByName = tagResponses.associateBy { it.name }
+        val postTags = request.tags.map { tag ->
+            val tagResponse = tagResponsesByName.getValue(tag.lowercase())
+            PostTag(tagId = tagResponse.id, name = tag)
+        }
+        post.saveTags(postTags)
 
         return postRepository.save(post)
             .let(::PostResponse)

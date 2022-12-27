@@ -45,7 +45,7 @@ class Post(
     val tags: List<PostTag>
         get() = _tags
 
-    fun saveTags(tagIds: List<Long>) {
-        _tags.addAll(tagIds.map { PostTag(it) })
+    fun saveTags(tags: List<PostTag>) {
+        this._tags.addAll(tags)
     }
 }

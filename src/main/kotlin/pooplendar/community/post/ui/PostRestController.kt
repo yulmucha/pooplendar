@@ -13,26 +13,58 @@ import org.springframework.web.bind.annotation.RestController
 import pooplendar.community.post.application.CreatePostRequest
 import pooplendar.community.post.application.PostResponse
 import pooplendar.community.post.application.PostService
+import pooplendar.community.tag.application.CreateTagRequest
+import pooplendar.community.tag.application.TagService
 import pooplendar.support.ui.ApiResponse
 import java.net.URI
 import javax.validation.Valid
 import javax.validation.constraints.Min
+
 
 @Validated
 @RequestMapping("/api/v1/posts")
 @RestController
 class PostRestController(
     private val postService: PostService,
+    private val tagService: TagService,
 ) {
     private val logger = LoggerFactory.getLogger(javaClass)
 
     @PostMapping
     fun create(@Valid @RequestBody request: CreatePostRequest): ResponseEntity<ApiResponse<PostResponse>> {
         logger.info("게시 글 생성 요청 \n\t $request")
-        val postResponse = postService.save(request)
+
+        validateTags(request.tags)
+
+        logger.info("태그 생성 요청 \n\t ${request.tags}")
+        val tagResponses = try {
+            tagService.saveAll(request.tags.map { CreateTagRequest(it) })
+        } catch (_: Exception) {
+            tagService.findAllByNameIn(request.tags)
+        }
+
+        if (request.tags.size != tagResponses.size) {
+            throw AssertionError("태그 처리 에러")
+        }
+
+        logger.info("새 태그 생성 및 기존 태그 조회 완료 \n\t $tagResponses")
+
+        val postResponse = postService.save(request, tagResponses)
         logger.info("게시 글 생성 완료 \n\t $postResponse")
+
         return ResponseEntity.created(URI.create("/api/v1/posts/${postResponse.id}"))
             .body(ApiResponse.success(postResponse))
+    }
+
+    private fun validateTags(tags: List<String>) {
+        tags.forEach { tagName ->
+            if (tagName.isBlank()) {
+                throw IllegalArgumentException("빈 문자열이거나 공백만 포함한 문자열은 태그가 될 수 없습니다.")
+            }
+            if (tagName.contains(" ")) {
+                throw IllegalArgumentException("태그에는 공백이 포함될 수 없습니다.")
+            }
+        }
     }
 
     @GetMapping
