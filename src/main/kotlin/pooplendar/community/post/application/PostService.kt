@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import pooplendar.community.post.domain.Post
 import pooplendar.community.post.domain.PostRepository
+import pooplendar.community.post.domain.PostTag
 import pooplendar.community.tag.application.TagResponse
 
 @Transactional(readOnly = true)
@@ -19,7 +20,13 @@ class PostService(
             contents = request.contents,
             boardId = request.boardId!!,
         )
-        post.saveTags(tagResponses.map { it.id })
+
+        val tagResponsesByName = tagResponses.associateBy { it.name }
+        val postTags = request.tags.map { tag ->
+            val tagResponse = tagResponsesByName.getValue(tag.lowercase())
+            PostTag(tagId = tagResponse.id, name = tag)
+        }
+        post.saveTags(postTags)
 
         return postRepository.save(post)
             .let(::PostResponse)

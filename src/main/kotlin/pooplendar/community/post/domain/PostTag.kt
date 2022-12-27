@@ -7,4 +7,6 @@ import javax.persistence.Embeddable
 data class PostTag(
     @Column(nullable = false)
     val tagId: Long,
+
+    val name: String,
 )

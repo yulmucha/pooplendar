@@ -16,11 +16,10 @@ import org.springframework.test.web.servlet.post
 import pooplendar.community.RestControllerTest
 import pooplendar.community.createCreatePostRequest
 import pooplendar.community.createPostResponse
+import pooplendar.community.createTagResponse
 import pooplendar.community.post.application.PostService
 import pooplendar.community.post.ui.PostRestController
-import pooplendar.community.tag.application.TagResponse
 import pooplendar.community.tag.application.TagService
-import java.time.LocalDateTime
 
 @WebMvcTest(PostRestController::class)
 class PostRestControllerTest : RestControllerTest() {
@@ -38,7 +37,10 @@ class PostRestControllerTest : RestControllerTest() {
             likeCount = 0L,
         )
 
-        every { tagService.saveAll(any()) } returns listOf()
+        every { tagService.saveAll(any()) } returns listOf(
+            createTagResponse(1L, "kotlin"),
+            createTagResponse(2L, "spring")
+        )
         every { postService.save(any(), any()) } returns response
 
         mockMvc.post("/api/v1/posts") {
@@ -75,8 +77,8 @@ class PostRestControllerTest : RestControllerTest() {
                             .description("조회 수"),
                         fieldWithPath("body.likeCount").type(JsonFieldType.NUMBER)
                             .description("좋아요 수"),
-                        fieldWithPath("body.tagIds").type(JsonFieldType.ARRAY)
-                            .description("게시 글에 포함된 태그 ID 배열"),
+                        fieldWithPath("body.tags").type(JsonFieldType.ARRAY)
+                            .description("게시 글에 포함된 태그 배열"),
                         fieldWithPath("body.boardId").type(JsonFieldType.NUMBER)
                             .description("게시판 ID"),
                         fieldWithPath("body.createdAt").type(JsonFieldType.STRING)
@@ -131,8 +133,8 @@ class PostRestControllerTest : RestControllerTest() {
                             .description("조회 수"),
                         fieldWithPath("body[].likeCount").type(JsonFieldType.NUMBER)
                             .description("좋아요 수"),
-                        fieldWithPath("body[].tagIds").type(JsonFieldType.ARRAY)
-                            .description("게시 글에 포함된 태그 ID 배열"),
+                        fieldWithPath("body[].tags").type(JsonFieldType.ARRAY)
+                            .description("게시 글에 포함된 태그 배열"),
                         fieldWithPath("body[].boardId").type(JsonFieldType.NUMBER)
                             .description("게시판 ID"),
                         fieldWithPath("body[].createdAt").type(JsonFieldType.STRING)
@@ -177,8 +179,8 @@ class PostRestControllerTest : RestControllerTest() {
                             .description("조회 수"),
                         fieldWithPath("body.likeCount").type(JsonFieldType.NUMBER)
                             .description("좋아요 수"),
-                        fieldWithPath("body.tagIds").type(JsonFieldType.ARRAY)
-                            .description("게시 글에 포함된 태그 ID 배열"),
+                        fieldWithPath("body.tags").type(JsonFieldType.ARRAY)
+                            .description("게시 글에 포함된 태그 배열"),
                         fieldWithPath("body.boardId").type(JsonFieldType.NUMBER)
                             .description("게시판 ID"),
                         fieldWithPath("body.createdAt").type(JsonFieldType.STRING)

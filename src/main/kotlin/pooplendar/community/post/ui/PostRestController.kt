@@ -42,7 +42,12 @@ class PostRestController(
         } catch (_: Exception) {
             tagService.findAllByNameIn(request.tags)
         }
-        logger.info("태그 생성 완료 \n\t $tagResponses")
+
+        if (request.tags.size != tagResponses.size) {
+            throw AssertionError("태그 처리 에러")
+        }
+
+        logger.info("새 태그 생성 및 기존 태그 조회 완료 \n\t $tagResponses")
 
         val postResponse = postService.save(request, tagResponses)
         logger.info("게시 글 생성 완료 \n\t $postResponse")

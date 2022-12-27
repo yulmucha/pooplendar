@@ -24,7 +24,7 @@ data class PostResponse(
     val contents: String,
     val viewCount: Long,
     val likeCount: Long,
-    val tagIds: Set<Long>,
+    val tags: List<String>,
     val boardId: Long,
     val createdAt: LocalDateTime,
     val modifiedAt: LocalDateTime,
@@ -35,9 +35,8 @@ data class PostResponse(
         contents = post.contents,
         viewCount = post.viewCount,
         likeCount = post.likeCount,
-        tagIds = post.tags
-            .map { it.tagId }
-            .toSet(),
+        tags = post.tags
+            .map { it.name },
         boardId = post.boardId,
         createdAt = post.createdDateTime,
         modifiedAt = post.modifiedDateTime,
